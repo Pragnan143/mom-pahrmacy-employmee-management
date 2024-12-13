@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios"; // Ensure axios is installed
 import { useNavigate } from "react-router-dom";
+// import { UserContext } from '../../Context/UserContext';
 
 const LoginPage = () => {
+  // const { login } = useContext(UserContext);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,11 +30,15 @@ const LoginPage = () => {
         username,
         password,
       });
+      const userData=response.data.userData
       // Store the JWT token in localStorage
       sessionStorage.setItem("token", response.data.token);
-      console.log(response)
+      sessionStorage.setItem("user", JSON.stringify(userData));
+
+      console.log(response)      
+      // login(userData);
       // Check if the user is an admin
-      if (response.data.isAdmin) {
+      if (response.data.userData.isAdmin) {
         navigate("/admin"); // Navigate to the Admin page if isAdmin is true
       } else {
         navigate("/employee"); // Navigate to the Employee page if isAdmin is false

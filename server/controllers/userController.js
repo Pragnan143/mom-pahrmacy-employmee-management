@@ -41,7 +41,6 @@ const login = async (req, res) => {
         // Find the user by username
         const user = await User.findOne({ username });
         if (!user) return res.status(400).send('User not found');
-        console.log(user)
         // Verify the password
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) return res.status(400).send('Invalid password');
@@ -53,7 +52,7 @@ const login = async (req, res) => {
             { expiresIn: '1h' }
         );
 
-        res.header('Authorization', `Bearer ${token}`).send({ token , isAdmin: user.isAdmin  });
+        res.header('Authorization', `Bearer ${token}`).send({ token , isAdmin: user.isAdmin,userData:user  });
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -95,5 +94,40 @@ const addLearning = async (req, res) => {
         res.status(500).send(err.message);
     }
 };
-
-module.exports = { register, login, addLearning };
+const employees = async (req, res) => {
+    try {
+      // Find users who are not admins
+      const users = await User.find({ isAdmin: false });
+  
+      if (!users) {
+        return res.status(404).json({ message: "No non-admin users found" });
+      }
+  
+      // Return the list of users
+      return res.status(200).json({ users });
+    } catch (error) {
+      console.error("Error fetching non-admin users:", error);
+      return res.status(500).json({ message: "Server error" });
+    }
+  };
+const getUserById = async (req, res) => {
+    const { id } = req.params; // Extract the user ID from the URL parameter
+    
+    try {
+      // Find the user by their ID
+      const user = await User.findById(id);
+  
+      // If user is not found, return a 404 error
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      // Return the user data in the response
+      res.status(200).json(user);
+    } catch (error) {
+      console.error("Error fetching user by ID:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  };
+  
+module.exports = { register, login, addLearning ,employees,getUserById};
