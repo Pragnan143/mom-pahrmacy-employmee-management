@@ -7,8 +7,8 @@ const Body = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (techDescription.split(' ').length < 60 || nonTechDescription.split(' ').length < 60) {
-      alert('Both descriptions must contain at least 60 words');
+    if (techDescription.split(' ').length < 30 || nonTechDescription.split(' ').length < 30) {
+      alert('Both descriptions must contain at least 30 words');
       return;
     }
 
@@ -20,7 +20,7 @@ const Body = () => {
       <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3">
           <label htmlFor="techDescription" className="font-semibold text-lg text-gray-800">
-            Technical Description <span className="text-sm text-gray-500">(minimum 60 words)</span>
+            Technical Description <span className="text-sm text-gray-500">(minimum 30 words)</span>
           </label>
           <textarea
             id="techDescription"
@@ -29,16 +29,16 @@ const Body = () => {
             onChange={(e) => setTechDescription(e.target.value)}
             placeholder="Enter technical description..."
           />
-          {techDescription && techDescription.split(' ').length < 60 && (
+          {techDescription && techDescription.split(' ').length < 30 && (
             <span className="text-red-600 text-sm font-medium">
-              {`Need ${60 - techDescription.split(' ').length} more words`}
+              {`Need ${30 - techDescription.split(' ').length} more words`}
             </span>
           )}
         </div>
 
         <div className="flex flex-col gap-3">
           <label htmlFor="nonTechDescription" className="font-semibold text-lg text-gray-800">
-            Non-Technical Description <span className="text-sm text-gray-500">(minimum 60 words)</span>
+            Non-Technical Description <span className="text-sm text-gray-500">(minimum 30 words)</span>
           </label>
           <textarea
             id="nonTechDescription"
@@ -47,9 +47,9 @@ const Body = () => {
             onChange={(e) => setNonTechDescription(e.target.value)}
             placeholder="Enter non-technical description..."
           />
-          {nonTechDescription && nonTechDescription.split(' ').length < 60 && (
+          {nonTechDescription && nonTechDescription.split(' ').length < 30 && (
             <span className="text-red-600 text-sm font-medium">
-              {`Need ${60 - nonTechDescription.split(' ').length} more words`}
+              {`Need ${30 - nonTechDescription.split(' ').length} more words`}
             </span>
           )}
         </div>

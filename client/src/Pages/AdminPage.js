@@ -1,6 +1,6 @@
 
 import React from 'react'
-import Navbar from '../Components/UserPortal/Navbar'
+import Navbar from '../Components/Navbar/Navbar'
 import Teammates from '../Components/Adminportal/Teammates'
 
 
