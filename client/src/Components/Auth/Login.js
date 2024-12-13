@@ -28,10 +28,9 @@ const LoginPage = () => {
         username,
         password,
       });
-
       // Store the JWT token in localStorage
-      localStorage.setItem("token", response.data.token);
-
+      sessionStorage.setItem("token", response.data.token);
+      console.log(response)
       // Check if the user is an admin
       if (response.data.isAdmin) {
         navigate("/admin"); // Navigate to the Admin page if isAdmin is true

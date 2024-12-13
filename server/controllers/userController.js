@@ -37,22 +37,23 @@ const login = async (req, res) => {
     }
 
     try {
+
         // Find the user by username
         const user = await User.findOne({ username });
         if (!user) return res.status(400).send('User not found');
-
+        console.log(user)
         // Verify the password
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) return res.status(400).send('Invalid password');
 
         // Generate a JWT
         const token = jwt.sign(
-            { _id: user._id, isAdmin: user.isAdmin },
+            { _id: user._id, },
             process.env.JWT_SECRET || 'SECRET_KEY',
             { expiresIn: '1h' }
         );
 
-        res.header('Authorization', `Bearer ${token}`).send({ token });
+        res.header('Authorization', `Bearer ${token}`).send({ token , isAdmin: user.isAdmin  });
     } catch (err) {
         res.status(500).send(err.message);
     }
