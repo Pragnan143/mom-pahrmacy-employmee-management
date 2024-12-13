@@ -1,9 +1,12 @@
-import Teammates from "./Pages/Adminportal/Teammates";
+import AdminPage from "./Pages/AdminPage";
+import EmployeePage from "./Pages/EmployeePage";
 
 function App() {
   return (
     <div className="App">
-      <Teammates/>
+      <AdminPage />
+      <EmployeePage />
+      
     </div>
   );
 }

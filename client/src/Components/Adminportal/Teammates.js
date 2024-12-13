@@ -63,9 +63,9 @@ const Teammates = () => {
   };
 
   return (
-    <div className="flex flex-col items-center bg-gray-100 min-h-screen p-6">
+    <div className="flex flex-col items-center bg-gray-100 min-h-screen p-6 ">
       {!editMode ? (
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-10" >
           <h2 className="text-4xl font-medium text-gray-600 mb-6 ">Hi There This is your team</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
@@ -82,7 +82,7 @@ const Teammates = () => {
                 <div className="flex space-x-2 justify-center item-center">
                   <button
                     onClick={() => handleEditClick(teammate.id)}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                    className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                     Details
                   </button>
                   <button
