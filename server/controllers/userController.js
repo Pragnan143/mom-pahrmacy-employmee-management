@@ -60,40 +60,59 @@ const login = async (req, res) => {
 
 // Add learning data
 const addLearning = async (req, res) => {
-    const { techLearnings, nonTechLearnings, remarks } = req.body;
+    const { learnings, _id } = req.body;
+    console.log(req.body);
 
-    if (!techLearnings && !nonTechLearnings && !remarks) {
+    // Destructure techLearnings, nonTechLearnings, remarks from the learnings object
+    const { techLearnings, nonTechLearnings, remarks } = learnings;
+
+    if (!techLearnings && !nonTechLearnings) {
         return res.status(400).send('At least one learning field is required');
     }
+    console.log(techLearnings);
+    
 
     try {
         // Find the user by ID
-        const user = await User.findById(req.user._id);
+        const user = await User.findById(_id);
         if (!user) return res.status(404).send('User not found');
 
         if (user.isAdmin) {
             return res.status(403).send('Admins cannot add learnings');
         }
 
-        // Update learning fields
-        if (techLearnings && Array.isArray(techLearnings)) {
-            user.learnings.techLearnings.push(...techLearnings);
+        // Add the current date to the learnings object
+        const currentDate = new Date().toISOString(); // Get the current date in ISO format
+
+        // Update learning fields if they are provided
+        if (techLearnings) {
+            // Assuming that techLearnings is a string (description), we directly set it
+            user.learnings.techLearnings = techLearnings;
         }
 
-        if (nonTechLearnings && Array.isArray(nonTechLearnings)) {
-            user.learnings.nonTechLearnings.push(...nonTechLearnings);
+        if (nonTechLearnings) {
+            // Assuming that nonTechLearnings is a string (description), we directly set it
+            user.learnings.nonTechLearnings = nonTechLearnings;
         }
 
+        // Add remarks if provided
         if (remarks) {
             user.learnings.remarks = remarks;
         }
 
+        // Add the current date
+        user.learnings.dateAdded = currentDate;
+
+        // Save the user with the updated learning fields
         await user.save();
         res.status(200).send('Learning added successfully');
     } catch (err) {
-        res.status(500).send(err.message);
+        console.error('Error adding learning:', err); // Log the error for debugging
+        res.status(500).send('An error occurred while adding learning');
     }
 };
+
+
 const employees = async (req, res) => {
     try {
       // Find users who are not admins

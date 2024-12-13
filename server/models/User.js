@@ -7,24 +7,13 @@ const userSchema = new mongoose.Schema({
   learnings: {
     type: {
       techLearnings: {
-        type: [
-          {
-            topic: { type: String, required: true }, // Tech topic name
-            modules: { type: [String], default: [] }, // List of modules for the tech topic
-          },
-        ],
-        default: [],
+        type:String
       },
       nonTechLearnings: {
-        type: [
-          {
-            activity: { type: String, required: true }, // Non-tech activity
-            details: { type: String, default: '' }, // Details about the activity
-          },
-        ],
-        default: [],
+        type:String
       },
-      remarks: { type: String, default: '' }, // General remarks
+      remarks: { type: String, default: '' },
+      dateAdded:{type:String} // General remarks
     },
     default: {},
   },

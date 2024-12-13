@@ -55,7 +55,7 @@ const UserLearning = () => {
         </div>
       </div>
 
-      <div className="w-full px-10 flex items-center justify-end gap-6">
+      <div className="w-full px-10 flex items-center justify-end gap-6 pt-5">
         <button
           type="submit"
           className="px-6 py-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200 ease-in-out"
@@ -68,7 +68,7 @@ const UserLearning = () => {
         >
           Review
         </button>
-        <p className="text-lg text-gray-900 ">{new Date(userLearning.date).toLocaleDateString()}</p>
+        <p className="text-lg text-gray-900 ">{new Date(userLearning.dateAdded).toLocaleDateString()}</p>
       </div>
     </div>
   );

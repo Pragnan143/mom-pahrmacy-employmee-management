@@ -1,19 +1,63 @@
 import React, { useState } from 'react';
+import axios from "axios"; 
 
-const Body = () => {
+const EmployeeLearnings = () => {
   const [techDescription, setTechDescription] = useState('');
   const [nonTechDescription, setNonTechDescription] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    // Validate the word count for both descriptions
     if (techDescription.split(' ').length < 30 || nonTechDescription.split(' ').length < 30) {
       alert('Both descriptions must contain at least 30 words');
       return;
     }
-
-    console.log('Form submitted:', { techDescription, nonTechDescription });
+  
+    // Data to be sent to the server
+    const learnings={
+      techLearnings:techDescription,
+      nonTechLearnings:nonTechDescription
+    }
+    
+    const user=sessionStorage.getItem('user')
+    const _id=JSON.parse(user)._id
+    console.log(learnings,_id);
+    
+    try {
+      // Make a POST request to the backend API using axios
+      const response = await axios.post(
+        'http://localhost:5000/user/add-learnings', 
+        {
+         learnings,_id
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`, // Example using token from localStorage
+          }
+        }
+      );
+  
+      console.log('Success:', response.data);
+      alert('Learning data submitted successfully!');
+    } catch (error) {
+      if (error.response) {
+        // Server responded with a non-2xx status
+        console.error('Error response:', error.response.data);
+        alert('There was an error submitting your data.');
+      } else if (error.request) {
+        // No response received
+        console.error('Error request:', error.request);
+        alert('No response from the server. Please try again later.');
+      } else {
+        // Other errors
+        console.error('Error:', error.message);
+        alert('Error submitting the form. Please try again later.');
+      }
+    }
   };
+  
 
   return (
     <div className="p-6 sm:p-10 lg:p-16 max-w-4xl mx-auto bg-gray-50 rounded-lg shadow-lg my-16">
@@ -65,4 +109,4 @@ const Body = () => {
   );
 };
 
-export default Body;
+export default EmployeeLearnings;

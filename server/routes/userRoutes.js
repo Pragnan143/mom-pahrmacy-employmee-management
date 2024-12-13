@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/register', register);
 router.post('/login', login);
-router.post('/add-learning', authenticateToken, addLearning);
+router.post('/add-learnings', addLearning);
 router.get('/:id',getUserById)
 router.get("/", employees);
 
