@@ -1,10 +1,9 @@
+import Teammates from "./Pages/Adminportal/Teammates";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        Njoy Pandago 
-      </header>
+      <Teammates/>
     </div>
   );
 }
