@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ProfilePic from '../../Assets/profile.png'
+
 
 const Teammates = () => {
   const [teammates, setTeammates] = useState([]);
@@ -32,8 +34,16 @@ const Teammates = () => {
     navigate(`/employee-details/${id}`);
   };
 
-  const handleDeleteClick = (id) => {
-    setTeammates((prev) => prev.filter((teammate) => teammate._id !== id));
+  const handleDeleteClick = async (id) => {
+    try {
+      // Deleting the user from the server
+      await axios.delete(`http://localhost:5000/user/${id}`);
+      // Updating the state to remove the deleted user
+      setTeammates(teammates.filter((teammate) => teammate._id !== id));
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      setErrorMessage("Failed to delete user.");
+    }
   };
 
   const handleAddUserClick = () => {
@@ -42,6 +52,28 @@ const Teammates = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleAddUserSubmit = async (e) => {
+    
+    const formData = new FormData(e.target);
+    const newUser = {
+      username: formData.get("username"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+      isAdmin: formData.get("isAdmin") === "true",
+    };
+
+    try {
+      // Adding the new user
+      const response = await axios.post("http://localhost:5000/user/register", newUser);
+      // Adding the new user to the teammates state
+      setTeammates([...teammates, response.data.user]);
+      closeModal();
+    } catch (error) {
+      console.error("Error adding user:", error);
+      setErrorMessage("Failed to add user.");
+    }
   };
 
   return (
@@ -67,8 +99,8 @@ const Teammates = () => {
               className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center space-y-4"
             >
               <img
-                src={teammate.photo || "default-avatar.png"}
-                alt={`${teammate.username}'s avatar`}
+                src={ProfilePic}
+                alt={`Avatar`}
                 className="w-20 h-20 rounded-full object-cover border-2 border-gray-300"
               />
               <p className="text-lg font-semibold text-gray-800">{teammate.username}</p>
@@ -95,20 +127,7 @@ const Teammates = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-md w-96">
             <h2 className="text-2xl font-medium text-gray-700 mb-4">Add User</h2>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                axios.post("http://localhost:5000/user/register", {
-                  username: formData.get("username"),
-                  email: formData.get("email"),
-                  password: formData.get("password"),
-                  isAdmin: formData.get("isAdmin") === "true",
-                });
-                closeModal();
-              }}
-              className="space-y-4"
-            >
+            <form onSubmit={handleAddUserSubmit} className="space-y-4">
               <div>
                 <label className="block text-gray-700">Username</label>
                 <input

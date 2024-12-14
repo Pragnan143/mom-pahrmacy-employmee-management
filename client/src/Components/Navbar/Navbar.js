@@ -1,9 +1,12 @@
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 const Navbar = ({ username }) => {
+  const Navigate=useNavigate()
   const handleLogout = () => {
     // Add logout logic here
-    console.log('Logging out...');
+    sessionStorage.removeItem('user')
+    sessionStorage.removeItem('token')
+    Navigate('/')
   };
 
   return (

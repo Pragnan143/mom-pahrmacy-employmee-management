@@ -31,16 +31,16 @@ const register = async (req, res) => {
 
 // Log in a user
 const login = async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!username || !password) {
+    if (!email || !password) {
         return res.status(400).send('Username and password are required');
     }
 
     try {
 
         // Find the user by username
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ email });
         if (!user) return res.status(400).send('User not found');
         // Verify the password
         const validPassword = await bcrypt.compare(password, user.password);
@@ -148,6 +148,20 @@ const getUserById = async (req, res) => {
       console.error("Error fetching user by ID:", error);
       res.status(500).json({ message: "Server error" });
     }
-  };
-  
-module.exports = { register, login, addLearning ,employees,getUserById};
+};
+
+const deleteUserById = async (req,res) => {
+    const { id } = req.params; // Extract the user ID from the URL parameter
+
+    try {
+        // Attempt to find and delete the user
+        const user = await User.findByIdAndDelete(id);
+        console.log(user)
+    } catch (error) {
+        // Log and rethrow the error for the calling function
+        console.error('Error in deleteUserById:', error.message);
+        throw new Error(error.message || 'Database deletion failed');
+    }
+};
+
+module.exports = { register, login, addLearning ,employees,getUserById,deleteUserById };

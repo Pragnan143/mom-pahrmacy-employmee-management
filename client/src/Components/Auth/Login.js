@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   // const { login } = useContext(UserContext);
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ const LoginPage = () => {
     e.preventDefault();
 
     // Basic validation
-    if (username === "" || password === "") {
+    if (email === "" || password === "") {
       setErrorMessage("Both fields are required.");
       return;
     }
@@ -27,7 +27,7 @@ const LoginPage = () => {
     try {
       // Send login request to the backend
       const response = await axios.post("http://localhost:5000/user/login", {
-        username,
+        email,
         password,
       });
       const userData=response.data.userData
@@ -67,10 +67,10 @@ const LoginPage = () => {
               Username
             </label>
             <input
-              type="text"
+              type="email"
               id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-lg mt-1"
               placeholder="Enter your username"
             />
