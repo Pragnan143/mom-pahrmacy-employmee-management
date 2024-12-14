@@ -7,7 +7,7 @@ const app = express();
 
 // Use CORS middleware to allow requests from port 3000
 app.use(cors({
-  origin: 'http://localhost:3000', // Update with your front-end URL if needed
+  origin: 'http://localhost:3000'|| 'https://mom-employmee.vercel.app', // Update with your front-end URL if needed
 }));
 
 app.use(express.json());
