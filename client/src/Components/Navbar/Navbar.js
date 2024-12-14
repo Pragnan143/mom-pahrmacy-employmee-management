@@ -7,14 +7,14 @@ const Navbar = ({ username }) => {
   };
 
   return (
-    <nav className="flex justify-between items-center p-4 bg-yellow-300 shadow-md">
-      <div className="text-2xl font-bold text-teal-600">
+    <nav className="flex justify-between items-center p-4 bg-teal-600 shadow-md">
+      <div className="text-2xl font-bold text-white">
         Mom Pharmacy Employment Portal
       </div>
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <span className="text-xl">👤</span>
-          <span className="text-teal-600 font-medium">
+          <span className="text-white font-medium">
             {username || 'User'}
           </span>
         </div>

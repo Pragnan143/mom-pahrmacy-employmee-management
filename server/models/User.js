@@ -12,8 +12,12 @@ const userSchema = new mongoose.Schema({
       nonTechLearnings: {
         type:String
       },
-      remarks: { type: String, default: '' },
-      dateAdded:{type:String} // General remarks
+      remarks: {
+         type: String, default: ''
+      },
+      dateAdded:{
+        type:String
+      } 
     },
     default: {},
   },

@@ -65,11 +65,9 @@ const addLearning = async (req, res) => {
 
     // Destructure techLearnings, nonTechLearnings, remarks from the learnings object
     const { techLearnings, nonTechLearnings, remarks } = learnings;
-
     if (!techLearnings && !nonTechLearnings) {
         return res.status(400).send('At least one learning field is required');
     }
-    console.log(techLearnings);
     
 
     try {
