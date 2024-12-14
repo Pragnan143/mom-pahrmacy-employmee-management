@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import jsPDF from 'jspdf';
 
 const UserLearning = () => {
   const { id } = useParams(); // Extract the user ID from URL parameters
@@ -14,9 +15,9 @@ const UserLearning = () => {
         // Fetch user learning data from the server
         const response = await axios.get(`http://localhost:5000/user/${id}`);
         setUserLearning(response.data.learnings);
-        console.log(response.data.learnings)
+        console.log(response.data.learnings);
       } catch (err) {
-        setError("Failed to fetch user learning data.");
+        setError('Failed to fetch user learning data.');
       } finally {
         setLoading(false);
       }
@@ -24,6 +25,34 @@ const UserLearning = () => {
 
     fetchUserLearning();
   }, [id]); // Re-run the effect when the id changes
+
+  const handleDownloadPDF = () => {
+    if (!userLearning) return;
+
+    // Initialize jsPDF instance
+    const doc = new jsPDF();
+
+    // Add content to the PDF
+    doc.setFont('Helvetica', 'normal');
+    doc.setFontSize(16);
+    doc.text('User Learning Summary', 10, 10);
+
+    doc.setFontSize(12);
+    doc.text('Technical Learnings:', 10, 20);
+    doc.setFontSize(10);
+    doc.text(userLearning.techLearnings || 'No technical description provided.', 10, 30, { maxWidth: 190 });
+
+    doc.setFontSize(12);
+    doc.text('Non-Technical Learnings:', 10, 50);
+    doc.setFontSize(10);
+    doc.text(userLearning.nonTechLearnings || 'No non-technical description provided.', 10, 60, { maxWidth: 190 });
+
+    doc.setFontSize(12);
+    doc.text(`Date Added: ${new Date(userLearning.dateAdded).toLocaleDateString()}`, 10, 80);
+
+    // Save the PDF
+    doc.save('UserLearning.pdf');
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -42,33 +71,34 @@ const UserLearning = () => {
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-3">
           <h1 className="font-semibold text-lg text-gray-800">Technical Learnings</h1>
-          <p className="p-3 h-36 sm:h-40 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200 ease-in-out">
-            {userLearning.techLearnings}
+          <p className="text-gray-700">
+            {userLearning.techLearnings || 'No technical description provided.'}
           </p>
         </div>
 
         <div className="flex flex-col gap-3">
           <h1 className="font-semibold text-lg text-gray-800">Non-Technical Description</h1>
-          <p className="p-3 h-36 sm:h-40 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200 ease-in-out">
-            {userLearning.nonTechLearnings}
+          <p className="text-gray-700">
+            {userLearning.nonTechLearnings || 'No non-technical description provided.'}
           </p>
         </div>
       </div>
 
       <div className="w-full px-10 flex items-center justify-end gap-6 pt-5">
         <button
-          type="submit"
+          type="button"
+          onClick={handleDownloadPDF}
           className="px-6 py-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200 ease-in-out"
         >
-          Get Pdf
+          Download PDF
         </button>
         <button
-          type="submit"
-          className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200 ease-in-out"
+          type="button"
+          className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 ease-in-out"
         >
           Review
         </button>
-        <p className="text-lg text-gray-900 ">{new Date(userLearning.dateAdded).toLocaleDateString()}</p>
+        <p className="text-lg text-gray-900">{new Date(userLearning.dateAdded).toLocaleDateString()}</p>
       </div>
     </div>
   );
