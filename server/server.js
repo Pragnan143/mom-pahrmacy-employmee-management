@@ -6,9 +6,33 @@ const userRoutes = require('./routes/userRoutes');
 const app = express();
 
 // Use CORS middleware to allow requests from port 3000
-app.use(cors({
-  origin: 'http://localhost:3000'|| 'https://mom-employmee.vercel.app', // Update with your front-end URL if needed
-}));
+const allowedOrigins = ['http://localhost:3000', 'https://mom-employmee.vercel.app'];
+
+// Configure CORS middleware
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Requested-With',
+    'Accept',
+    'Origin',
+  ], // Allowed headers
+  exposedHeaders: ['Authorization'], // Headers exposed to the client
+  credentials: true, // Allow cookies to be sent with requests
+  optionsSuccessStatus: 204, // Status for successful OPTIONS requests
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
