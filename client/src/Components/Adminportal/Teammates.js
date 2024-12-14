@@ -50,6 +50,8 @@ const Teammates = () => {
     setIsModalOpen(false); // Close the modal
   };
 
+  
+
   return (
     <div className="flex flex-col items-center bg-gray-100 min-h-screen p-6">
       <div className="flex flex-col items-center w-full space-y-10">
@@ -107,6 +109,13 @@ const Teammates = () => {
               onSubmit={(e) => {
                 e.preventDefault();
                 const formData = new FormData(e.target);
+                axios.post('http://localhost:5000/user/register',{
+                  username: formData.get("username"),
+                  email: formData.get("email"),
+                  password: formData.get("password"),
+                  isAdmin: formData.get("isAdmin") === "true",
+                })
+                console.log(formData)
                 console.log({
                   username: formData.get("username"),
                   email: formData.get("email"),

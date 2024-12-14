@@ -4,11 +4,11 @@ const jwt = require('jsonwebtoken');
 
 // Register a new user
 const register = async (req, res) => {
-    const { username, password, isAdmin } = req.body;
-    if (!username || !password) {
-        return res.status(400).send('Username and password are required');
+    const { username, password, email, isAdmin } = req.body;
+    if (!username || !password || !email) {
+        return res.status(400).send('Username, password, Email are required');
     }
-
+    console.log(req.body)
     try {
         // Hash the password
         const salt = await bcrypt.genSalt(10);
@@ -18,6 +18,7 @@ const register = async (req, res) => {
         const user = new User({
             username,
             password: hashedPassword,
+            email:email,
             isAdmin: isAdmin || false
         });
         await user.save();
@@ -65,9 +66,11 @@ const addLearning = async (req, res) => {
 
     // Destructure techLearnings, nonTechLearnings, remarks from the learnings object
     const { techLearnings, nonTechLearnings, remarks } = learnings;
+
     if (!techLearnings && !nonTechLearnings) {
         return res.status(400).send('At least one learning field is required');
     }
+    console.log(techLearnings);
     
 
     try {
