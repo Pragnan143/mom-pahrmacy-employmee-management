@@ -13,6 +13,7 @@ app.use(cors({
 app.use(express.json());
 
 // Use the routes
+app.get("/", (req, res) => res.send("Express"));
 app.use('/user', userRoutes);
 
 // Start the server
