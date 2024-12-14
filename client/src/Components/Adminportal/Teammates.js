@@ -7,7 +7,7 @@ const Teammates = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const Navigate=useNavigate()
   useEffect(() => {
     const fetchNonAdminUsers = async () => {
       try {
@@ -35,7 +35,7 @@ const Teammates = () => {
   }, []);
 
   const handleDetailsClick = (id) => {
-    console.log(id);
+  Navigate(`/employee-details/${id}`)
   };
 
   const handleDeleteClick = (id) => {
