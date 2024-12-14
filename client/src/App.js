@@ -7,7 +7,6 @@ import AuthPage from "./Pages/AuthPage";
 // import ProtectedRoute from './components/ProtectedRoute';
 // import { UserProvider } from "./Context/UserContext"; // Ensure the correct path
 
-
 function App() {
   return (
     
@@ -21,10 +20,13 @@ function App() {
           <Route path="/employee-details/:id" element={<EmployeeDetailsPage />} />
         </Routes>   
          </Router>
-        
-
       </div>
   );
 }
 
 export default App;
+
+
+
+
+
