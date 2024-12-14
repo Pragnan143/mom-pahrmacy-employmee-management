@@ -48,7 +48,12 @@ const UserLearning = () => {
     doc.text(userLearning.nonTechLearnings || 'No non-technical description provided.', 10, 60, { maxWidth: 190 });
 
     doc.setFontSize(12);
-    doc.text(`Date Added: ${new Date(userLearning.dateAdded).toLocaleDateString()}`, 10, 80);
+    doc.text('Remarks:', 10, 80);
+    doc.setFontSize(10);
+    doc.text(userLearning.remarks || 'No Remarks provided.', 10, 90, { maxWidth: 190 });
+
+    doc.setFontSize(12);
+    doc.text(`Date Added: ${new Date(userLearning.dateAdded).toLocaleDateString()}`, 10, 120);
 
     // Save the PDF
     doc.save('UserLearning.pdf');
@@ -80,6 +85,12 @@ const UserLearning = () => {
           <h1 className="font-semibold text-lg text-gray-800">Non-Technical Description</h1>
           <p className="text-gray-700">
             {userLearning.nonTechLearnings || 'No non-technical description provided.'}
+          </p>
+        </div>
+        <div className="flex flex-col gap-3">
+          <h1 className="font-semibold text-lg text-gray-800">Remarks </h1>
+          <p className="text-gray-700">
+            {userLearning.remarks || 'No Remarks Found.'}
           </p>
         </div>
       </div>

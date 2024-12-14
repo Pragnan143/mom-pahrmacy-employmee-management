@@ -7,57 +7,49 @@ const Teammates = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const Navigate=useNavigate()
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchNonAdminUsers = async () => {
       try {
-        // Start loading
         setLoading(true);
-        setErrorMessage(""); // Clear previous errors
+        setErrorMessage("");
 
-        // Make API call to fetch non-admin users
         const response = await axios.get("http://localhost:5000/user/");
-        // Update state with the fetched users
         setTeammates(response.data.users);
-        console.log(response.data.users);
       } catch (error) {
-        // Handle error
         console.error("Error fetching non-admin users:", error);
         setErrorMessage("Failed to fetch users.");
       } finally {
-        // End loading
         setLoading(false);
       }
     };
 
-    // Call the fetch function
     fetchNonAdminUsers();
   }, []);
 
   const handleDetailsClick = (id) => {
-  Navigate(`/employee-details/${id}`)
+    navigate(`/employee-details/${id}`);
   };
 
   const handleDeleteClick = (id) => {
-    setTeammates((prev) => prev.filter((teammate) => teammate.id !== id));
+    setTeammates((prev) => prev.filter((teammate) => teammate._id !== id));
   };
 
   const handleAddUserClick = () => {
-    setIsModalOpen(true); // Open the modal
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // Close the modal
+    setIsModalOpen(false);
   };
-
-  
 
   return (
     <div className="flex flex-col items-center bg-gray-100 min-h-screen p-6">
-      <div className="flex flex-col items-center w-full space-y-10">
+      <div className="flex flex-col items-center w-full space-y-6">
         <div className="flex items-center justify-center relative w-full">
           <h2 className="text-4xl font-medium text-gray-600 mb-6 text-center">
-            Hi There This is your team
+            Hi There, This is Your Team
           </h2>
           <button
             onClick={handleAddUserClick}
@@ -68,28 +60,27 @@ const Teammates = () => {
         </div>
         {loading && <p>Loading...</p>}
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        <div className="">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {teammates.map((teammate) => (
             <div
-              key={teammate._id} // Use _id as the unique key for each teammate
-              className="bg-white shadow-md rounded-lg p-4 flex gap-6 justify-center items-center"
+              key={teammate._id}
+              className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center space-y-4"
             >
               <img
-                // If the 'photo' field exists, use it, otherwise use a default placeholder
-                src={teammate.photo || "default-avatar.png"} // Assuming 'photo' is available or provide a fallback
+                src={teammate.photo || "default-avatar.png"}
                 alt={`${teammate.username}'s avatar`}
-                className="w-16 h-16 rounded-full object-cover border-2 border-gray-300"
+                className="w-20 h-20 rounded-full object-cover border-2 border-gray-300"
               />
               <p className="text-lg font-semibold text-gray-800">{teammate.username}</p>
-              <div className="flex space-x-2 justify-center items-center">
+              <div className="flex space-x-2">
                 <button
-                  onClick={() => handleDetailsClick(teammate._id)} // Pass _id to handleDetailsClick
+                  onClick={() => handleDetailsClick(teammate._id)}
                   className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-500"
                 >
                   Details
                 </button>
                 <button
-                  onClick={() => handleDeleteClick(teammate._id)} // Pass _id to handleDeleteClick
+                  onClick={() => handleDeleteClick(teammate._id)}
                   className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
                 >
                   Remove
@@ -104,19 +95,11 @@ const Teammates = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-md w-96">
             <h2 className="text-2xl font-medium text-gray-700 mb-4">Add User</h2>
-
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 const formData = new FormData(e.target);
-                axios.post('http://localhost:5000/user/register',{
-                  username: formData.get("username"),
-                  email: formData.get("email"),
-                  password: formData.get("password"),
-                  isAdmin: formData.get("isAdmin") === "true",
-                })
-                console.log(formData)
-                console.log({
+                axios.post("http://localhost:5000/user/register", {
                   username: formData.get("username"),
                   email: formData.get("email"),
                   password: formData.get("password"),
@@ -135,7 +118,6 @@ const Teammates = () => {
                   required
                 />
               </div>
-
               <div>
                 <label className="block text-gray-700">Email</label>
                 <input
@@ -145,7 +127,6 @@ const Teammates = () => {
                   required
                 />
               </div>
-
               <div>
                 <label className="block text-gray-700">Password</label>
                 <input
@@ -155,7 +136,6 @@ const Teammates = () => {
                   required
                 />
               </div>
-
               <div>
                 <label className="block text-gray-700">Is Admin</label>
                 <div className="flex items-center space-x-4">
@@ -180,7 +160,6 @@ const Teammates = () => {
                   </label>
                 </div>
               </div>
-
               <button
                 type="submit"
                 className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500"
@@ -188,7 +167,6 @@ const Teammates = () => {
                 Submit
               </button>
             </form>
-
             <button
               onClick={closeModal}
               className="mt-4 w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600"
