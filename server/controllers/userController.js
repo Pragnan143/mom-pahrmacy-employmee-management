@@ -83,7 +83,7 @@ const addLearning = async (req, res) => {
         }
 
         // Add the current date to the learnings object
-        const currentDate = new Date().toISOString(); // Get the current date in ISO format
+        const currentDate = new Date().toISOString().split('T')[0]; // Get the current date in ISO format
 
         // Update learning fields if they are provided
         if (techLearnings) {
