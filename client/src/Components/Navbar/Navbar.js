@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-const Navbar = ({ username }) => {
+const Navbar = () => {
   const Navigate=useNavigate()
   const handleLogout = () => {
     // Add logout logic here
@@ -8,7 +8,8 @@ const Navbar = ({ username }) => {
     sessionStorage.removeItem('token')
     Navigate('/')
   };
-
+    const user = sessionStorage.getItem('user')
+    const username = JSON.parse(user).username
   return (
     <nav className="flex justify-between items-center p-4 bg-teal-600 shadow-md">
       <div className="text-2xl font-bold text-white">
