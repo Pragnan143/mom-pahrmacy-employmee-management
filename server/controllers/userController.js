@@ -84,27 +84,19 @@ const addLearning = async (req, res) => {
 
         // Add the current date to the learnings object
         const currentDate = new Date().toISOString().split('T')[0]; // Get the current date in ISO format
+        console.log(currentDate)
+        // Create a new learning object
+        const newLearning = {
+            techLearnings,
+            nonTechLearnings,
+            remarks,
+            dateAdded: currentDate,
+        };
 
-        // Update learning fields if they are provided
-        if (techLearnings) {
-            // Assuming that techLearnings is a string (description), we directly set it
-            user.learnings.techLearnings = techLearnings;
-        }
+        // Push the new learning to the user's learnings array
+        user.learnings.push(newLearning);
 
-        if (nonTechLearnings) {
-            // Assuming that nonTechLearnings is a string (description), we directly set it
-            user.learnings.nonTechLearnings = nonTechLearnings;
-        }
-
-        // Add remarks if provided
-        if (remarks) {
-            user.learnings.remarks = remarks;
-        }
-
-        // Add the current date
-        user.learnings.dateAdded = currentDate;
-
-        // Save the user with the updated learning fields
+        // Save the user with the updated learnings array
         await user.save();
         res.status(200).send('Learning added successfully');
     } catch (err) {
@@ -112,6 +104,7 @@ const addLearning = async (req, res) => {
         res.status(500).send('An error occurred while adding learning');
     }
 };
+
 
 
 const employees = async (req, res) => {
@@ -150,6 +143,97 @@ const getUserById = async (req, res) => {
     }
 };
 
+// const getUserLearnings = async (req, res) => {
+//     const { id ,dateAdd} = req.params; // Extract the user ID from the URL parameter
+//     console.log(id,dateAdd);
+
+//     const dateAdded=dateAdd
+//     if (!dateAdded) {
+//         return res.status(400).send('Date is required');
+//     }
+
+//     try {
+//         // Find the user by ID and filter learnings by dateAdded
+//         const user = await User.findOne(
+//             { _id:id, 'learnings.dateAdded': dateAdded },
+//             { 'learnings.$': 1 } // Only return the matched learnings
+//         );
+//         console.log(user);
+        
+//         if (!user) {
+//             return res.status(404).send('User or learnings not found');
+//         }
+
+//         // Return the learnings that match the dateAdded
+//         res.status(200).json(user.learnings);
+//     } catch (err) {
+//         console.error('Error fetching learnings:', err); // Log the error for debugging
+//         res.status(500).send('An error occurred while fetching learnings');
+//     }
+// };
+
+// const getUserLearnings = async (req, res) => {
+//     const { id, dateAdd } = req.params; // Extract user ID and dateAdded from the URL parameters
+//     console.log(id, dateAdd);
+
+//     const dateAdded = dateAdd;
+//     if (!dateAdded) {
+//         return res.status(400).send('Date is required');
+//     }
+
+//     try {
+//         // Find the user by ID and filter learnings by dateAdded
+//          const user = await User.findById(id);
+        
+//         const learnings = user.learnings
+     
+//         if (!user) {
+//             return res.status(404).send('User or learnings not found');
+//         }
+
+//         // Return the learnings that match the dateAdded
+//         res.status(200).json(user.learnings);
+//     } catch (err) {
+//         console.error('Error fetching learnings:', err); // Log the error for debugging
+//         res.status(500).send('An error occurred while fetching learnings');
+//     }
+// };
+
+const getUserLearnings = async (req, res) => {
+    const { id, dateAdd } = req.params; // Extract user ID and dateAdded from the URL parameters
+    console.log(id, dateAdd);
+
+    const dateAdded = dateAdd;  // Date to filter learnings by
+    if (!dateAdded) {
+        return res.status(400).send('Date is required');
+    }
+
+    try {
+        // Find the user by ID
+        const user = await User.findById(id);
+        
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // Filter learnings that match the dateAdded
+        const filteredLearnings = user.learnings.filter(learning => learning.dateAdded === dateAdded);
+
+        // If no learnings match the date, return a message
+        if (filteredLearnings.length === 0) {
+            return res.status(404).send('No learnings found for the given date');
+        }
+        console.log(filteredLearnings);
+        
+        // Return the filtered learnings that match the dateAdded
+        res.status(200).json(filteredLearnings);
+    } catch (err) {
+        console.error('Error fetching learnings:', err); // Log the error for debugging
+        res.status(500).send('An error occurred while fetching learnings');
+    }
+};
+
+
 const deleteUserById = async (req,res) => {
     const { id } = req.params; // Extract the user ID from the URL parameter
 
@@ -164,4 +248,4 @@ const deleteUserById = async (req,res) => {
     }
 };
 
-module.exports = { register, login, addLearning ,employees,getUserById,deleteUserById };
+module.exports = { register, login, addLearning ,employees,getUserById,deleteUserById,getUserLearnings };
