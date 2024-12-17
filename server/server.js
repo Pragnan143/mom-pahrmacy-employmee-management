@@ -9,7 +9,7 @@ const app = express();
 
 
 // Use CORS middleware to allow requests from port 3000
-const allowedOrigins = ['http://localhost:3000', 'https://mom-employmee.vercel.app'];
+const allowedOrigins = ['http://localhost:3000', 'https://momrogersteam.vercel.app/','https://mom-employee.vercel.app/'];
 
 // Configure CORS middleware
 const corsOptions = {
