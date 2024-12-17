@@ -17,7 +17,7 @@ const Teammates = () => {
         setLoading(true);
         setErrorMessage("");
 
-        const response = await axios.get("http://localhost:5000/user/");
+        const response = await axios.get("https://mom-pahrmacy-employmee-management.onrender.com/user/");
         setTeammates(response.data.users);
       } catch (error) {
         console.error("Error fetching non-admin users:", error);
@@ -37,7 +37,7 @@ const Teammates = () => {
   const handleDeleteClick = async (id) => {
     try {
       // Deleting the user from the server
-      await axios.delete(`http://localhost:5000/user/${id}`);
+      await axios.delete(`https://mom-pahrmacy-employmee-management.onrender.com/user/${id}`);
       // Updating the state to remove the deleted user
       setTeammates(teammates.filter((teammate) => teammate._id !== id));
     } catch (error) {
@@ -66,7 +66,7 @@ const Teammates = () => {
 
     try {
       // Adding the new user
-      const response = await axios.post("http://localhost:5000/user/register", newUser);
+      const response = await axios.post("https://mom-pahrmacy-employmee-management.onrender.com/user/register", newUser);
       // Adding the new user to the teammates state
       setTeammates([...teammates, response.data.user]);
       closeModal();

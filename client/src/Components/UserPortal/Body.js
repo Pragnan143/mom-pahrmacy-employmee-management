@@ -31,7 +31,7 @@ const EmployeeLearnings = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/user/add-learnings',
+        'https://mom-pahrmacy-employmee-management.onrender.com/user/add-learnings',
         { learnings, _id },
         {
           headers: {

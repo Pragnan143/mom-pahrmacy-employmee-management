@@ -26,7 +26,7 @@ const LoginPage = () => {
 
     try {
       // Send login request to the backend
-      const response = await axios.post("http://localhost:5000/user/login", {
+      const response = await axios.post("https://mom-pahrmacy-employmee-management.onrender.com/user/login", {
         email,
         password,
       });

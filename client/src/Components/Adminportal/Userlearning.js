@@ -16,7 +16,7 @@ const UserLearning = () => {
   useEffect(() => {
     const fetchUserLearning = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/user/${id}`);
+        const response = await axios.get(`https://mom-pahrmacy-employmee-management.onrender.com/user/${id}`);
         setUserLearning(response.data.learnings);
       } catch (err) {
         setError('Failed to fetch user learning data.');
