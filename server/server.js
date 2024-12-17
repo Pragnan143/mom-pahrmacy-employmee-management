@@ -6,10 +6,8 @@ require('dotenv').config();
 
 const app = express();
 
-
-
-// Use CORS middleware to allow requests from port 3000
-const allowedOrigins = ['http://localhost:3000', 'https://mom-employee.vercel.app/' ];
+// Use CORS middleware to allow requests from specific origins
+const allowedOrigins = ['http://localhost:3000', 'https://mom-employee.vercel.app'];
 
 // Configure CORS middleware
 const corsOptions = {
@@ -37,18 +35,25 @@ const corsOptions = {
 // Apply CORS middleware
 app.use(cors(corsOptions));
 
+// Middleware to parse JSON bodies
 app.use(express.json());
 
-// Use the routes
+// Base route for testing
 app.get("/", (req, res) => res.send("Express"));
+
+// Use user routes
 app.use('/user', userRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server is running on Port ${PORT}`);
-  
-  mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('DB is connected'))
-  .catch((err) => console.error('DB connection error:', err));
+
+  // Connect to MongoDB
+  mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+    .then(() => console.log('DB is connected'))
+    .catch((err) => console.error('DB connection error:', err));
 });
