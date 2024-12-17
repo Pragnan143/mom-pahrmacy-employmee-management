@@ -5,6 +5,8 @@ const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
+
+
 // Use CORS middleware to allow requests from port 3000
 const allowedOrigins = ['http://localhost:3000', 'https://mom-employmee.vercel.app'];
 
