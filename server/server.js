@@ -5,70 +5,47 @@ const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-// Allowed origins for CORS
+// Use CORS middleware to allow requests from port 3000
 const allowedOrigins = ['http://localhost:3000', 'https://mom-employmee.vercel.app'];
 
-// CORS Configuration
+// Configure CORS middleware
 const corsOptions = {
   origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or Postman)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Requested-With',
+    'Accept',
+    'Origin',
+  ], // Allowed headers
+  exposedHeaders: ['Authorization'], // Headers exposed to the client
+  credentials: true, // Allow cookies to be sent with requests
+  optionsSuccessStatus: 204, // Status for successful OPTIONS requests
 };
 
+// Apply CORS middleware
 app.use(cors(corsOptions));
+
 app.use(express.json());
 
-// Routes
-app.get('/', (req, res) => {
-  res.send('Express API is running');
-});
+// Use the routes
+app.get("/", (req, res) => res.send("Express"));
 app.use('/user', userRoutes);
 
-// MongoDB Connection
-let cachedDb = null;
-
-async function connectToDatabase() {
-  if (cachedDb) {
-    return cachedDb;
-  }
-  try {
-    const db = await mongoose.connect("mongodb+srv://mompharmacy:mompharmacy@cluster0.xw0cahd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
-    cachedDb = db;
-    console.log('Connected to MongoDB');
-    return db;
-  } catch (err) {
-    console.error('MongoDB connection error:', err);
-    throw err;
-  }
-}
-
-// Check environment and start server or export handler
-if (process.env.NODE_ENV !== 'production') {
-  // For local development
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, async () => {
-    try {
-      await connectToDatabase(); // Connect to the database
-      console.log(`Server is running on http://localhost:${PORT}`);
-    } catch (err) {
-      console.error('Error starting the server:', err);
-    }
-  });
-} else {
-  // For Vercel deployment
-  module.exports = async (req, res) => {
-    try {
-      await connectToDatabase(); // Ensure DB is connected
-      app(req, res); // Pass request to Express
-    } catch (err) {
-      res.status(500).json({ message: 'Internal Server Error', error: err.message });
-    }
-  };
-}
+// Start the server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on Port ${PORT}`);
+  
+  mongoose.connect('mongodb+srv://mompharmacy:mompharmacy@cluster0.xw0cahd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+  .then(() => console.log('DB is connected'))
+  .catch((err) => console.error('DB connection error:', err));
+});
