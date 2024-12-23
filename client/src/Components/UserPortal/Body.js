@@ -130,14 +130,14 @@ const EmployeeLearnings = () => {
           {/* Review or Suggestion */}
           <div>
             <label htmlFor="reviewOrSuggestion" className="block font-semibold text-lg text-gray-800">
-              Review / Complaint / Suggestion
+              Review / Complaint / Suggestion / Yoga / Exercise / Book Reading 
             </label>
             <textarea
               id="reviewOrSuggestion"
               className="w-full p-3 h-24 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-100 hover:bg-white transition"
               value={reviewOrSuggestion}
               onChange={(e) => setReviewOrSuggestion(e.target.value)}
-              placeholder="Enter your review, complaint, or suggestion..."
+              placeholder="Please specify about which content you are placing here"
               readOnly={hasEdited} // Disable editing after submission
             />
           </div>
