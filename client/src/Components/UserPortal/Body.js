@@ -5,6 +5,7 @@ const EmployeeLearnings = () => {
   const [techDescription, setTechDescription] = useState('');
   const [nonTechDescription, setNonTechDescription] = useState('');
   const [reviewOrSuggestion, setReviewOrSuggestion] = useState('');
+  const [extras,setExtras]=useState('')
   const [submittedData, setSubmittedData] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
   const [hasEdited, setHasEdited] = useState(false);
@@ -24,8 +25,9 @@ const EmployeeLearnings = () => {
       techLearnings: techDescription,
       nonTechLearnings: nonTechDescription,
       remarks: reviewOrSuggestion,
+      extras:extras
+      
     };
-
     const user = sessionStorage.getItem('user');
     const _id = JSON.parse(user)._id;
 
@@ -48,7 +50,10 @@ const EmployeeLearnings = () => {
         techDescription,
         nonTechDescription,
         reviewOrSuggestion,
+        extras
       });
+
+      
 
       if (isEditable) {
         alert('Data edited successfully!');
@@ -61,6 +66,7 @@ const EmployeeLearnings = () => {
       console.error('Error submitting:', error);
     }
   };
+
 
   return (
     <div className="flex gap-10 max-w-6xl mx-auto my-16 p-6">
@@ -81,6 +87,10 @@ const EmployeeLearnings = () => {
             <div>
               <h3 className="font-semibold text-lg text-gray-700">Review / Complaint / Suggestion</h3>
               <p className="text-gray-600">{submittedData.reviewOrSuggestion || 'No review or suggestion provided.'}</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg text-gray-700">Extra Curricular Activities </h3>
+              <p className="text-gray-600">{submittedData.extras || 'No Inputs provided.'}</p>
             </div>
           </div>
         ) : (
@@ -130,13 +140,28 @@ const EmployeeLearnings = () => {
           {/* Review or Suggestion */}
           <div>
             <label htmlFor="reviewOrSuggestion" className="block font-semibold text-lg text-gray-800">
-              Review / Complaint / Suggestion / Yoga / Exercise / Book Reading 
+              Review / Complaint / Suggestion 
             </label>
             <textarea
               id="reviewOrSuggestion"
               className="w-full p-3 h-24 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-100 hover:bg-white transition"
               value={reviewOrSuggestion}
               onChange={(e) => setReviewOrSuggestion(e.target.value)}
+              placeholder="Please specify about which content you are placing here"
+              readOnly={hasEdited} // Disable editing after submission
+            />
+          </div>
+
+          {/*Extra Carricular Activities*/ }
+          <div>
+            <label htmlFor="ExtraCurricular" className="block font-semibold text-lg text-gray-800">
+             Yoga / Exercise / Book Reading 
+            </label>
+            <textarea
+              id="ExtraCurricular"
+              className="w-full p-3 h-24 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-100 hover:bg-white transition"
+              value={extras}
+              onChange={(e) => setExtras(e.target.value)}
               placeholder="Please specify about which content you are placing here"
               readOnly={hasEdited} // Disable editing after submission
             />

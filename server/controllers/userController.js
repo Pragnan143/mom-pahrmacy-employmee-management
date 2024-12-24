@@ -62,15 +62,13 @@ const login = async (req, res) => {
 // Add learning data
 const addLearning = async (req, res) => {
     const { learnings, _id } = req.body;
-    console.log(req.body);
 
     // Destructure techLearnings, nonTechLearnings, remarks from the learnings object
-    const { techLearnings, nonTechLearnings, remarks } = learnings;
+    const { techLearnings, nonTechLearnings, remarks, extras } = learnings;
 
     if (!techLearnings && !nonTechLearnings) {
         return res.status(400).send('At least one learning field is required');
     }
-    console.log(techLearnings);
     
 
     try {
@@ -84,14 +82,16 @@ const addLearning = async (req, res) => {
 
         // Add the current date to the learnings object
         const currentDate = new Date().toISOString().split('T')[0]; // Get the current date in ISO format
-        console.log(currentDate)
         // Create a new learning object
         const newLearning = {
             techLearnings,
             nonTechLearnings,
             remarks,
+            extras,
             dateAdded: currentDate,
         };
+
+        console.log(newLearning);
 
         // Push the new learning to the user's learnings array
         user.learnings.push(newLearning);

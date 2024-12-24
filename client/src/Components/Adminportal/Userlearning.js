@@ -78,6 +78,8 @@ const UserLearning = () => {
     addSection('Technical Learnings:', selectedDateData.techLearnings || 'No technical description provided.');
     addSection('Non-Technical Learnings:', selectedDateData.nonTechLearnings || 'No non-technical description provided.');
     addSection('Remarks:', selectedDateData.remarks || 'No remarks provided.');
+    addSection('Extra Curricular Activities:', selectedDateData.extras || 'No Inputs provided.');
+
 
     if (y + lineHeight > pageHeight - 10) {
       doc.addPage();
@@ -127,6 +129,11 @@ const UserLearning = () => {
               <div className="flex flex-col gap-3">
                 <h1 className="font-semibold text-lg text-gray-800">Remarks</h1>
                 <p className="text-gray-700">{selectedDateData.remarks || 'No remarks provided.'}</p>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <h1 className="font-semibold text-lg text-gray-800">Extra Curricular</h1>
+                <p className="text-gray-700">{selectedDateData.extras || 'No inputs provided.'}</p>
               </div>
             </div>
 

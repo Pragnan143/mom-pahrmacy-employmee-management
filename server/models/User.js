@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema(
         techLearnings: { type: String, required: true }, // Specific tech learning
         nonTechLearnings: { type: String }, // Specific non-tech learning
         remarks: { type: String, default: '' }, // General remarks
+        extras: { type: String, default: '' },
         dateAdded: { type: String, default: Date.now }, // Date of learning
       },
     ],
