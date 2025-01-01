@@ -138,7 +138,7 @@ const UserLearning = () => {
               </div>
 
               <div className="flex flex-col gap-3">
-                <h1 className="font-semibold text-lg text-gray-800">LinkedIn Post</h1>
+                <h1 className="font-semibold text-lg text-gray-800">Posted on LinkedIn?</h1>
                 <p className="text-gray-700">{selectedDateData.linkedinpost || 'No inputs provided.'}</p>
               </div>
             </div>

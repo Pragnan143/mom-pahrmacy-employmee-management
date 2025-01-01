@@ -89,7 +89,7 @@ const EmployeeLearnings = () => {
               <p className="text-gray-600">{submittedData.extras || 'No Inputs provided.'}</p>
             </div>
             <div>
-              <h3 className="font-semibold text-lg text-gray-700">Post on LinkedIn</h3>
+              <h3 className="font-semibold text-lg text-gray-700">Posted on LinkedIn</h3>
               <p className="text-gray-600">{submittedData.linkedinPost === 'yes' ? 'Yes' : 'No'}</p>
             </div>
           </div>
@@ -168,7 +168,7 @@ const EmployeeLearnings = () => {
 
           {/* LinkedIn Post Section */}
           <div>
-            <label className="block font-semibold text-lg text-gray-800">Post on LinkedIn?</label>
+            <label className="block font-semibold text-lg text-gray-800">Posted on LinkedIn?</label>
             <div className="flex items-center gap-4 mt-2">
               <label className="flex items-center gap-2">
                 <input
@@ -192,7 +192,7 @@ const EmployeeLearnings = () => {
               </label>
             </div>
           </div>
-          
+
           {/* Submit Button */}
           <button
             type="submit"
