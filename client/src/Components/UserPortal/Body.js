@@ -9,11 +9,11 @@ const EmployeeLearnings = () => {
   const [submittedData, setSubmittedData] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
   const [hasEdited, setHasEdited] = useState(false);
+  const [linkedinPost, setLinkedinPost] = useState('no');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate the word count for technical and non-technical descriptions
     if (!isEditable) {
       if (techDescription.split(' ').length < 30 || nonTechDescription.split(' ').length < 30) {
         alert('Both descriptions must contain at least 30 words');
@@ -25,8 +25,8 @@ const EmployeeLearnings = () => {
       techLearnings: techDescription,
       nonTechLearnings: nonTechDescription,
       remarks: reviewOrSuggestion,
-      extras:extras
-      
+      extras:extras,
+      linkedinPost: linkedinPost,
     };
     const user = sessionStorage.getItem('user');
     const _id = JSON.parse(user)._id;
@@ -45,23 +45,20 @@ const EmployeeLearnings = () => {
 
       console.log('Success:', response.data);
 
-      // Update submitted data state
       setSubmittedData({
         techDescription,
         nonTechDescription,
         reviewOrSuggestion,
-        extras
+        extras,
+        linkedinPost,
       });
-
-      
 
       if (isEditable) {
         alert('Data edited successfully!');
       }
 
-      // Toggle editability based on submission state
       setIsEditable(!isEditable);
-      setHasEdited(isEditable); // Only lock editing after a successful edit
+      setHasEdited(isEditable);
     } catch (error) {
       console.error('Error submitting:', error);
     }
@@ -70,7 +67,6 @@ const EmployeeLearnings = () => {
 
   return (
     <div className="flex gap-10 max-w-6xl mx-auto my-16 p-6">
-      {/* Left Section - Display Submitted Data */}
       <div className="w-1/2 bg-gray-100 p-6 rounded-lg shadow-lg">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">Submitted Data</h2>
 
@@ -92,13 +88,16 @@ const EmployeeLearnings = () => {
               <h3 className="font-semibold text-lg text-gray-700">Extra Curricular Activities </h3>
               <p className="text-gray-600">{submittedData.extras || 'No Inputs provided.'}</p>
             </div>
+            <div>
+              <h3 className="font-semibold text-lg text-gray-700">Post on LinkedIn</h3>
+              <p className="text-gray-600">{submittedData.linkedinPost === 'yes' ? 'Yes' : 'No'}</p>
+            </div>
           </div>
         ) : (
           <p className="text-gray-500">No data submitted yet.</p>
         )}
       </div>
-
-      {/* Right Section - Form */}
+      
       <div className="w-1/2 bg-gray-50 p-6 rounded-lg shadow-lg">
         <form className="flex flex-col gap-6">
           {/* Technical Description */}
@@ -148,7 +147,7 @@ const EmployeeLearnings = () => {
               value={reviewOrSuggestion}
               onChange={(e) => setReviewOrSuggestion(e.target.value)}
               placeholder="Please specify about which content you are placing here"
-              readOnly={hasEdited} // Disable editing after submission
+              readOnly={hasEdited}
             />
           </div>
 
@@ -163,10 +162,37 @@ const EmployeeLearnings = () => {
               value={extras}
               onChange={(e) => setExtras(e.target.value)}
               placeholder="Please specify about which content you are placing here"
-              readOnly={hasEdited} // Disable editing after submission
+              readOnly={hasEdited}
             />
           </div>
 
+          {/* LinkedIn Post Section */}
+          <div>
+            <label className="block font-semibold text-lg text-gray-800">Post on LinkedIn?</label>
+            <div className="flex items-center gap-4 mt-2">
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="linkedinPost"
+                  value="yes"
+                  checked={linkedinPost === 'yes'}
+                  onChange={() => setLinkedinPost('yes')}
+                />
+                Yes
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="linkedinPost"
+                  value="no"
+                  checked={linkedinPost === 'no'}
+                  onChange={() => setLinkedinPost('no')}
+                />
+                No
+              </label>
+            </div>
+          </div>
+          
           {/* Submit Button */}
           <button
             type="submit"

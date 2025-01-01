@@ -79,6 +79,7 @@ const UserLearning = () => {
     addSection('Non-Technical Learnings:', selectedDateData.nonTechLearnings || 'No non-technical description provided.');
     addSection('Remarks:', selectedDateData.remarks || 'No remarks provided.');
     addSection('Extra Curricular Activities:', selectedDateData.extras || 'No Inputs provided.');
+    addSection('Post on linkedin:', selectedDateData.linkedinpost || 'No Inputs')
 
 
     if (y + lineHeight > pageHeight - 10) {
@@ -134,6 +135,11 @@ const UserLearning = () => {
               <div className="flex flex-col gap-3">
                 <h1 className="font-semibold text-lg text-gray-800">Extra Curricular</h1>
                 <p className="text-gray-700">{selectedDateData.extras || 'No inputs provided.'}</p>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <h1 className="font-semibold text-lg text-gray-800">LinkedIn Post</h1>
+                <p className="text-gray-700">{selectedDateData.linkedinpost || 'No inputs provided.'}</p>
               </div>
             </div>
 
