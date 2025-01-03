@@ -186,7 +186,7 @@ const UserLearning = () => {
                   Posted on LinkedIn?
                 </h1>
                 <p className="text-gray-700">
-                  {selectedDateData.linkedinPost || "No inputs provided."}
+                  {(selectedDateData.linkedinPost ? "Yes ": "NO ")}
                 </p>
               </div>
             </div>
