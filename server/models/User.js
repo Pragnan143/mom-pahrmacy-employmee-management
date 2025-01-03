@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
@@ -8,15 +8,16 @@ const userSchema = new mongoose.Schema(
     isAdmin: { type: Boolean, default: false },
     learnings: [
       {
-        techLearnings: { type: String, required: true }, // Specific tech learning
-        nonTechLearnings: { type: String }, // Specific non-tech learning
-        remarks: { type: String, default: '' }, // General remarks
-        extras: { type: String, default: '' },
-        dateAdded: { type: String, default: Date.now }, // Date of learning
+        techLearnings: { type: String, required: true },
+        nonTechLearnings: { type: String },
+        remarks: { type: String, default: "" },
+        extras: { type: String, default: "" },
+        dateAdded: { type: String, default: Date.now },
+        linkedinPost: { type: Boolean, default: false },
       },
     ],
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);
