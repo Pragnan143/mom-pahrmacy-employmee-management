@@ -1,21 +1,13 @@
-Routes for Frontend to use 
-
-
+Routes for Frontend to use
 
 // For Future Admin Addition Functionality
-http://localhost:5000/user/register
+https://mom-pahrmacy-employmee-management.onrender.com/user/register
 
-
-
-//For Login of user 
-http://localhost:5000/user/login
-
-
+//For Login of user
+https://mom-pahrmacy-employmee-management.onrender.com/user/login
 
 //For adding learnings
-http://localhost:5000/user/add-learnings
-
-
+https://mom-pahrmacy-employmee-management.onrender.com/user/add-learnings
 
 //To get user details
-http://localhost:5000/user/:userId/details
+https://mom-pahrmacy-employmee-management.onrender.com/user/:userId/details

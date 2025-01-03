@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"; 
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 // import { UserContext } from '../../Context/UserContext';
 
@@ -26,16 +26,19 @@ const LoginPage = () => {
 
     try {
       // Send login request to the backend
-      const response = await axios.post("https://mom-pahrmacy-employmee-management.onrender.com/user/login", {
-        email,
-        password,
-      });
-      const userData=response.data.userData
+      const response = await axios.post(
+        "https://mom-pahrmacy-employmee-management.onrender.com/user/login",
+        {
+          email,
+          password,
+        }
+      );
+      const userData = response.data.userData;
       // Store the JWT token in localStorage
       sessionStorage.setItem("token", response.data.token);
       sessionStorage.setItem("user", JSON.stringify(userData));
 
-      console.log(response)      
+      console.log(response);
       // login(userData);
       // Check if the user is an admin
       if (response.data.userData.isAdmin) {
@@ -63,7 +66,10 @@ const LoginPage = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="username" className="block text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="username"
+              className="block text-sm font-semibold text-gray-700"
+            >
               Username
             </label>
             <input
@@ -77,7 +83,10 @@ const LoginPage = () => {
           </div>
 
           <div className="mb-6">
-            <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-semibold text-gray-700"
+            >
               Password
             </label>
             <input

@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ProfilePic from '../../Assets/profile.png'
-
+import ProfilePic from "../../Assets/profile.png";
 
 const Teammates = () => {
   const [teammates, setTeammates] = useState([]);
@@ -17,7 +16,9 @@ const Teammates = () => {
         setLoading(true);
         setErrorMessage("");
 
-        const response = await axios.get("https://mom-pahrmacy-employmee-management.onrender.com/user/");
+        const response = await axios.get(
+          "https://mom-pahrmacy-employmee-management.onrender.com/user/"
+        );
         setTeammates(response.data.users);
       } catch (error) {
         console.error("Error fetching non-admin users:", error);
@@ -37,7 +38,9 @@ const Teammates = () => {
   const handleDeleteClick = async (id) => {
     try {
       // Deleting the user from the server
-      await axios.delete(`https://mom-pahrmacy-employmee-management.onrender.com/user/${id}`);
+      await axios.delete(
+        `https://mom-pahrmacy-employmee-management.onrender.com/user/${id}`
+      );
       // Updating the state to remove the deleted user
       setTeammates(teammates.filter((teammate) => teammate._id !== id));
     } catch (error) {
@@ -55,7 +58,6 @@ const Teammates = () => {
   };
 
   const handleAddUserSubmit = async (e) => {
-    
     const formData = new FormData(e.target);
     const newUser = {
       username: formData.get("username"),
@@ -66,7 +68,10 @@ const Teammates = () => {
 
     try {
       // Adding the new user
-      const response = await axios.post("https://mom-pahrmacy-employmee-management.onrender.com/user/register", newUser);
+      const response = await axios.post(
+        "https://mom-pahrmacy-employmee-management.onrender.com/user/register",
+        newUser
+      );
       // Adding the new user to the teammates state
       setTeammates([...teammates, response.data.user]);
       closeModal();
@@ -103,7 +108,9 @@ const Teammates = () => {
                 alt={`Avatar`}
                 className="w-20 h-20 rounded-full object-cover border-2 border-gray-300"
               />
-              <p className="text-lg font-semibold text-gray-800">{teammate.username}</p>
+              <p className="text-lg font-semibold text-gray-800">
+                {teammate.username}
+              </p>
               <div className="flex space-x-2">
                 <button
                   onClick={() => handleDetailsClick(teammate._id)}
@@ -126,7 +133,9 @@ const Teammates = () => {
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-md w-96">
-            <h2 className="text-2xl font-medium text-gray-700 mb-4">Add User</h2>
+            <h2 className="text-2xl font-medium text-gray-700 mb-4">
+              Add User
+            </h2>
             <form onSubmit={handleAddUserSubmit} className="space-y-4">
               <div>
                 <label className="block text-gray-700">Username</label>
