@@ -222,13 +222,13 @@ const EmployeeLearnings = () => {
               htmlFor="Events"
             >
               Did you found any interesting events ?<br />
-              If
+              <p className="text-sm font-light text-gray-700">If any kindly drop link here</p>
             </label>
             <textarea
               id="Events"
               className="w-full p-3 h-24 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-100 hover:bg-white transition"
-              value={extras}
-              onChange={(e) => setEvent(e.target.value)}
+              value={events}
+              onChange={(e) => setEvents(e.target.value)}
               placeholder="Please specify about which content you are placing here"
               readOnly={hasEdited}
             />
