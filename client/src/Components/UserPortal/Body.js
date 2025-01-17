@@ -10,7 +10,7 @@ const EmployeeLearnings = () => {
   const [isEditable, setIsEditable] = useState(false);
   const [hasEdited, setHasEdited] = useState(false);
   const [linkedinPost, setLinkedinPost] = useState(false);
-  const [event, setEvent] = useState("");
+  const [events, setEvents] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -30,7 +30,7 @@ const EmployeeLearnings = () => {
       remarks: reviewOrSuggestion,
       extras: extras,
       linkedinPost: linkedinPost,
-      events: event,
+      events,
     };
     const user = sessionStorage.getItem("user");
     const _id = JSON.parse(user)._id;
@@ -55,7 +55,7 @@ const EmployeeLearnings = () => {
         reviewOrSuggestion,
         extras,
         linkedinPost,
-        event,
+        events,
       });
       if (isEditable) {
         alert("Data edited successfully!");
@@ -221,12 +221,13 @@ const EmployeeLearnings = () => {
               className="block font-semibold text-lg text-gray-800"
               htmlFor="Events"
             >
-              Did you found any interesting events ?
+              Did you found any interesting events ?<br />
+              If
             </label>
             <textarea
               id="Events"
               className="w-full p-3 h-24 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-100 hover:bg-white transition"
-              value={events}
+              value={extras}
               onChange={(e) => setEvent(e.target.value)}
               placeholder="Please specify about which content you are placing here"
               readOnly={hasEdited}
