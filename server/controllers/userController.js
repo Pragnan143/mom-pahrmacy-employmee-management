@@ -65,7 +65,7 @@ const addLearning = async (req, res) => {
   const { learnings, _id } = req.body;
   console.log(learnings);
   // Destructure techLearnings, nonTechLearnings, remarks from the learnings object
-  const { techLearnings, nonTechLearnings, remarks, extras, linkedinPost } =
+  const { techLearnings, nonTechLearnings, remarks, extras, linkedinPost,events } =
     learnings;
 
   if (!techLearnings && !nonTechLearnings) {
@@ -91,6 +91,7 @@ const addLearning = async (req, res) => {
       extras,
       dateAdded: currentDate,
       linkedinPost,
+      events
     };
 
 
