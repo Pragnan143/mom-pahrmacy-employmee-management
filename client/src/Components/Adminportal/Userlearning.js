@@ -183,7 +183,10 @@ const UserLearning = () => {
               <div className="flex flex-col gap-3">
                 <h1 className="font-semibold text-lg text-gray-800">events </h1>
                 <p className="text-gray-700">
-                  {selectedDateData.events || "No inputs provided."}
+                  <a href={selectedDateData.events}>
+                    {" "}
+                    {selectedDateData.events || "No inputs provided."}
+                  </a>
                 </p>
               </div>
 
