@@ -6,6 +6,8 @@ const EmployeeLearnings = () => {
   const [nonTechDescription, setNonTechDescription] = useState("");
   const [reviewOrSuggestion, setReviewOrSuggestion] = useState("");
   const [extras, setExtras] = useState("");
+  const [events, setEvents] = useState("");
+
   const [submittedData, setSubmittedData] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
   const [hasEdited, setHasEdited] = useState(false);
@@ -30,6 +32,7 @@ const EmployeeLearnings = () => {
       remarks: reviewOrSuggestion,
       extras: extras,
       linkedinPost: linkedinPost,
+      events: events,
     };
     const user = sessionStorage.getItem("user");
     const _id = JSON.parse(user)._id;
@@ -54,6 +57,7 @@ const EmployeeLearnings = () => {
         reviewOrSuggestion,
         extras,
         linkedinPost,
+        events,
       });
       if (isEditable) {
         alert("Data edited successfully!");
@@ -111,10 +115,18 @@ const EmployeeLearnings = () => {
             </div>
             <div>
               <h3 className="font-semibold text-lg text-gray-700">
+                Your event Suggestion
+              </h3>
+              <p className="text-gray-600">
+                {submittedData.events || "No Inputs provided."}
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg text-gray-700">
                 Posted on LinkedIn
               </h3>
               <p className="text-gray-600">
-                {submittedData.linkedinPost === "yes" ? "Yes" : "No"}
+                {submittedData.linkedinPost === true ? "Yes" : "No"}
               </p>
             </div>
           </div>
@@ -213,6 +225,24 @@ const EmployeeLearnings = () => {
             />
           </div>
 
+          {/*Event updates*/}
+          <div>
+            <label
+              className="block font-semibold text-lg text-gray-800"
+              htmlFor="Events"
+            >
+              Did you found any intresting Events ?
+            </label>
+            <input
+              type="text"
+              id="Events"
+              className="w-full p-3 h-24 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-100 hover:bg-white transition"
+              value={events}
+              onChange={(e) => setEvents(e.target.value)}
+              placeholder="Please specify about which content you are placing here"
+              readOnly={hasEdited}
+            />
+          </div>
           {/* LinkedIn Post Section */}
           <div>
             <label className="block font-semibold text-lg text-gray-800">

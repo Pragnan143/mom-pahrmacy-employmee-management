@@ -65,8 +65,14 @@ const addLearning = async (req, res) => {
   const { learnings, _id } = req.body;
   console.log(learnings);
   // Destructure techLearnings, nonTechLearnings, remarks from the learnings object
-  const { techLearnings, nonTechLearnings, remarks, extras, linkedinPost } =
-    learnings;
+  const {
+    techLearnings,
+    nonTechLearnings,
+    remarks,
+    extras,
+    linkedinPost,
+    events,
+  } = learnings;
 
   if (!techLearnings && !nonTechLearnings) {
     return res.status(400).send("At least one learning field is required");
@@ -91,8 +97,8 @@ const addLearning = async (req, res) => {
       extras,
       dateAdded: currentDate,
       linkedinPost,
+      events,
     };
-
 
     // Push the new learning to the user's learnings array
     user.learnings.push(newLearning);
@@ -142,61 +148,6 @@ const getUserById = async (req, res) => {
   }
 };
 
-// const getUserLearnings = async (req, res) => {
-//     const { id ,dateAdd} = req.params; // Extract the user ID from the URL parameter
-//     console.log(id,dateAdd);
-
-//     const dateAdded=dateAdd
-//     if (!dateAdded) {
-//         return res.status(400).send('Date is required');
-//     }
-
-//     try {
-//         // Find the user by ID and filter learnings by dateAdded
-//         const user = await User.findOne(
-//             { _id:id, 'learnings.dateAdded': dateAdded },
-//             { 'learnings.$': 1 } // Only return the matched learnings
-//         );
-//         console.log(user);
-
-//         if (!user) {
-//             return res.status(404).send('User or learnings not found');
-//         }
-
-//         // Return the learnings that match the dateAdded
-//         res.status(200).json(user.learnings);
-//     } catch (err) {
-//         console.error('Error fetching learnings:', err); // Log the error for debugging
-//         res.status(500).send('An error occurred while fetching learnings');
-//     }
-// };
-
-// const getUserLearnings = async (req, res) => {
-//     const { id, dateAdd } = req.params; // Extract user ID and dateAdded from the URL parameters
-//     console.log(id, dateAdd);
-
-//     const dateAdded = dateAdd;
-//     if (!dateAdded) {
-//         return res.status(400).send('Date is required');
-//     }
-
-//     try {
-//         // Find the user by ID and filter learnings by dateAdded
-//          const user = await User.findById(id);
-
-//         const learnings = user.learnings
-
-//         if (!user) {
-//             return res.status(404).send('User or learnings not found');
-//         }
-
-//         // Return the learnings that match the dateAdded
-//         res.status(200).json(user.learnings);
-//     } catch (err) {
-//         console.error('Error fetching learnings:', err); // Log the error for debugging
-//         res.status(500).send('An error occurred while fetching learnings');
-//     }
-// };
 
 const getUserLearnings = async (req, res) => {
   const { id, dateAdd } = req.params; // Extract user ID and dateAdded from the URL parameters

@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema(
         extras: { type: String, default: "" },
         dateAdded: { type: String, default: Date.now },
         linkedinPost: { type: Boolean, default: false },
+        events: { type: String },
       },
     ],
   },

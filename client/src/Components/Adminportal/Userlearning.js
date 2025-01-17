@@ -180,13 +180,21 @@ const UserLearning = () => {
                   {selectedDateData.extras || "No inputs provided."}
                 </p>
               </div>
-
+              <div className="flex flex-col gap-3">
+                <h1 className="font-semibold text-lg text-gray-800">
+                  Event Suggestions
+                </h1>
+                <p className="text-gray-700">
+                  {selectedDateData.events ||
+                    "No non-technical description provided."}
+                </p>
+              </div>
               <div className="flex flex-col gap-3">
                 <h1 className="font-semibold text-lg text-gray-800">
                   Posted on LinkedIn?
                 </h1>
                 <p className="text-gray-700">
-                  {(selectedDateData.linkedinPost ? "Yes ": "NO ")}
+                  {selectedDateData.linkedinPost ? "Yes " : "NO "}
                 </p>
               </div>
             </div>
