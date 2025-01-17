@@ -181,8 +181,7 @@ const UserLearning = () => {
                 </p>
               </div>
               <div className="flex flex-col gap-3">
-                <h1 className="font-semibold text-lg text-gray-800">
- events                 </h1>
+                <h1 className="font-semibold text-lg text-gray-800">events </h1>
                 <p className="text-gray-700">
                   {selectedDateData.events || "No inputs provided."}
                 </p>
@@ -193,12 +192,10 @@ const UserLearning = () => {
                   Posted on LinkedIn?
                 </h1>
                 <p className="text-gray-700">
-                  {(selectedDateData.linkedinPost ? "Yes ": "NO ")}
+                  {selectedDateData.linkedinPost ? "Yes " : "NO "}
                 </p>
               </div>
             </div>
-
-            
 
             <div className="w-full flex items-center justify-end gap-6 pt-5">
               <button

@@ -10,7 +10,7 @@ const EmployeeLearnings = () => {
   const [isEditable, setIsEditable] = useState(false);
   const [hasEdited, setHasEdited] = useState(false);
   const [linkedinPost, setLinkedinPost] = useState(false);
-  const [event,setEvent]=useState("")
+  const [event, setEvent] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -30,7 +30,7 @@ const EmployeeLearnings = () => {
       remarks: reviewOrSuggestion,
       extras: extras,
       linkedinPost: linkedinPost,
-      events:event
+      events: event,
     };
     const user = sessionStorage.getItem("user");
     const _id = JSON.parse(user)._id;
@@ -55,7 +55,7 @@ const EmployeeLearnings = () => {
         reviewOrSuggestion,
         extras,
         linkedinPost,
-        event
+        event,
       });
       if (isEditable) {
         alert("Data edited successfully!");
@@ -219,8 +219,7 @@ const EmployeeLearnings = () => {
               className="block font-semibold text-lg text-gray-800"
               htmlFor="Events"
             >
-Did you found any interesting events ?                
-
+              Did you found any interesting events ?
             </label>
             <textarea
               id="ExtraCurricular"
