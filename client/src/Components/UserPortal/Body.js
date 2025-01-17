@@ -214,6 +214,8 @@ const EmployeeLearnings = () => {
               readOnly={hasEdited}
             />
           </div>
+
+          {/*Events Section*/}
           <div>
             <label
               className="block font-semibold text-lg text-gray-800"
@@ -222,9 +224,9 @@ const EmployeeLearnings = () => {
               Did you found any interesting events ?
             </label>
             <textarea
-              id="ExtraCurricular"
+              id="Events"
               className="w-full p-3 h-24 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-100 hover:bg-white transition"
-              value={extras}
+              value={events}
               onChange={(e) => setEvent(e.target.value)}
               placeholder="Please specify about which content you are placing here"
               readOnly={hasEdited}
